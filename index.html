@@ -8,18 +8,18 @@
     <meta name="theme-color" content="#FFFFFF">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Mein Training">
+    <meta name="apple-mobile-web-app-title" content="Eisenwerk">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="apple-touch-icon" href="./icon-180.png">
     <link rel="icon" href="./icon-192.png" type="image/png">
-    <title>Mein Training</title>
+    <title>Eisenwerk</title>
     <script src="./training-theme.js"></script>
     <link rel="stylesheet" href="./training-theme.css">
 </head>
 <body>
     <header class="topnav">
         <div class="nav-inner">
-            <span class="brand">Mein Training</span>
+            <span class="brand">Eisenwerk</span>
             <div class="nav-actions">
                 <button id="organizerToggle" class="info" type="button" aria-expanded="false" aria-controls="organizer">Organizer</button>
                 <button id="themeToggle" class="info" type="button" aria-pressed="false">Dunkelmodus</button>
@@ -28,7 +28,7 @@
     </header>
     <main>
         <section class="hero" aria-labelledby="trainingTitle">
-            <h1 id="trainingTitle">Mein Training</h1>
+            <h1 id="trainingTitle">Eisenwerk</h1>
             <p>3 × Oberkörper · 1 × Unterkörper pro Woche</p>
         </section>
         <div class="workspace">
@@ -578,7 +578,7 @@ window.addEventListener('storage', () => render());
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = 'mein-training-backup-' + FitnessSteps.today() + '.json';
+            link.download = 'eisenwerk-backup-' + FitnessSteps.today() + '.json';
             document.body.append(link);
             link.click();
             link.remove();
@@ -591,7 +591,7 @@ window.addEventListener('storage', () => render());
             try {
                 const payload = JSON.parse(await file.text());
                 if (!payload || payload.app !== 'Mein Training' || !payload.storage || typeof payload.storage !== 'object') {
-                    throw new Error('Diese Datei ist kein gültiges Mein-Training-Backup.');
+                    throw new Error('Diese Datei ist kein gültiges Trainingsbackup.');
                 }
                 let count = 0;
                 for (const [key, value] of Object.entries(payload.storage)) {

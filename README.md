@@ -1,4 +1,4 @@
-# Mein Training
+# Eisenwerk
 
 Statische Trainings-Web-App mit drei Oberkörpereinheiten, einem Beintag, Organizer,
 Pausentimer, Schritten und lokal gespeicherten Trainingswerten.

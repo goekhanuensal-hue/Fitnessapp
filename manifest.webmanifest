@@ -1,7 +1,7 @@
 {
   "id": "./",
-  "name": "Mein Training",
-  "short_name": "Training",
+  "name": "Eisenwerk",
+  "short_name": "Eisenwerk",
   "description": "Trainingsplan mit Oberkörper-Schwerpunkt, Organizer und Trainingsfortschritt",
   "lang": "de",
   "start_url": "./",
