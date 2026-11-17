@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="referrer" content="no-referrer">
+    <meta name="description" content="Dein Upper/Lower-Trainingsplan, Organizer und Trainingsfortschritt.">
+    <meta name="theme-color" content="#FFFFFF">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mein Training">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="apple-touch-icon" href="./icon-180.png">
+    <link rel="icon" href="./icon-192.png" type="image/png">
+    <title>Mein Training</title>
+    <script src="./training-theme.js"></script>
+    <link rel="stylesheet" href="./training-theme.css">
+</head>
+<body>
+    <header class="topnav">
+        <div class="nav-inner">
+            <span class="brand">Mein Training</span>
+            <div class="nav-actions">
+                <button id="organizerToggle" class="info" type="button" aria-expanded="false" aria-controls="organizer">Organizer</button>
+                <button id="themeToggle" class="info" type="button" aria-pressed="false">Dunkelmodus</button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="hero" aria-labelledby="trainingTitle">
+            <h1 id="trainingTitle">Mein Training</h1>
+            <p>Upper / Lower Split · 4 Trainingstage pro Woche</p>
+        </section>
+        <div class="workspace">
+            <section id="organizer" class="organizer" hidden aria-labelledby="organizerTitle">
+                <h2 id="organizerTitle">Dein Sportkalender</h2>
+                <p class="calhint">
+                    Mo · Mi · Fr · Sa
+                    <br>
+                    Ungerade KW: 11:00 Uhr · Gerade KW: 15:00 Uhr
+                </p>
+                <button class="info" id="calendarToggle" aria-expanded="true" aria-controls="calendarContent">▦ Kalender</button>
+                <div id="calendarContent">
+                    <div class="calnav">
+                        <button id="prevMonth" aria-label="Vorheriger Monat">‹</button>
+                        <strong id="monthTitle" aria-live="polite"></strong>
+                        <button id="nextMonth" aria-label="Nächster Monat">›</button>
+                    </div>
+                    <button class="info" id="todayMonth">Heute</button>
+                    <div class="calgrid" id="calendarGrid" style="margin-top:12px"></div>
+                    <div id="calendarWeeks"></div>
+                    <p class="calhint">Nachtschicht gilt für die ganze ausgewählte Kalenderwoche – auch über Monats- und Jahresgrenzen. Erneut drücken stellt die normale Uhrzeit wieder her. Deine Auswahl bleibt in diesem Browser gespeichert.</p>
+                    <div id="calendarStatus" role="status" class="calhint"></div>
+                    <div class="backup-tools">
+                        <h3>Datensicherung & Datenübernahme</h3>
+                        <p>Exportiere deine Trainingswerte und Einstellungen als Datei. Auf einem neuen Gerät oder einer neuen Website kannst du die Datei hier wieder importieren.</p>
+                        <div class="backup-actions">
+                            <button class="info" id="backupExport" type="button">Daten exportieren</button>
+                            <label class="info backup-import-label" for="backupFile">Backup importieren</label>
+                            <input id="backupFile" type="file" accept="application/json,.json" hidden>
+                        </div>
+                        <p id="backupStatus" class="calhint" role="status">Gespeicherte Daten bleiben lokal in diesem Browser.</p>
+                    </div>
+                </div>
+            </section>
+            <div id="trainingView">
+                <div class="tabs" role="tablist">
+                    <button class="tab active" data-plan="A">Upper A</button>
+                    <button class="tab" data-plan="B">Lower A</button>
+                    <button class="tab" data-plan="A2">Upper B</button>
+                    <button class="tab" data-plan="C">Lower B</button>
+                </div>
+                <div id="description" class="sub"></div>
+                <div class="summary">
+                    <span>Dein Fortschritt</span>
+                    <span id="counter">0 / 9</span>
+                </div>
+                <div class="bar">
+                    <div class="fill" id="fill" style="width:0%"></div>
+                </div>
+                <div id="items"></div>
+                <button class="action" id="reset">Training abschließen & Haken zurücksetzen</button>
+                <div class="hint">
+                    Wochenrhythmus: Mo · Upper A, Mi · Lower A, Fr · Upper B, Sa · Lower B. Vor jeder Einheit 5–8 Minuten aufwärmen. Bei großen Maschinenübungen 2–3 Minuten, bei Isolationsübungen 60–120 Sekunden pausieren. Trainiere bei den meisten Arbeitssätzen mit 1–2 Wiederholungen in Reserve; ausgewählte letzte Isolationssätze können bis zum technischen Muskelversagen gehen. Dein tägliches Schrittziel bleibt 10.000 Schritte; ab 8.000 Schritten wird Cardio automatisch abgehakt.
+                    <br>
+                    <br>
+                    Deine Haken und Trainingswerte werden auf diesem Gerät in diesem Browser gespeichert.
+                </div>
+            </div>
+            <section id="timerView" class="timer-panel" hidden aria-labelledby="timerTitle">
+                <h2 id="timerTitle">Pausentimer</h2>
+                <output id="timerClock" class="timer-clock" role="timer" aria-live="off">00:00</output>
+                <div class="timer-options" aria-label="Pausendauer">
+                    <button class="info" type="button" data-seconds="60">60 Sek.</button>
+                    <button class="info" type="button" data-seconds="90">90 Sek.</button>
+                    <button class="info" type="button" data-seconds="120">120 Sek.</button>
+                </div>
+                <div class="timer-controls">
+                    <button class="info" id="timerPause" type="button" disabled>Pausieren</button>
+                    <button class="info" id="timerReset" type="button" disabled>Zurücksetzen</button>
+                </div>
+                <p id="timerStatus" class="timer-status" role="status">Wähle eine Dauer, um die Pause zu starten.</p>
+            </section>
+        </div>
+    </main>
+    <nav class="bottom-nav" aria-label="Hauptnavigation">
+        <button class="info" id="showTraining" type="button" aria-controls="trainingView" aria-pressed="true">Training</button>
+        <button class="info" id="showTimer" type="button" aria-controls="timerView" aria-pressed="false">Pausentimer</button>
+    </nav>
+    <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="sheet">
+            <button class="close" id="closeModal" aria-label="Schließen">×</button>
+            <h2 id="modalTitle"></h2>
+            <p id="modalDetail"></p>
+            <div id="diagram" class="diagram"></div>
+            <div class="legend">
+                <span>
+                    <i class="dot" style="background:#4bd3a0"></i>
+                    Hauptbelastung
+                </span>
+                <span>
+                    <i class="dot" style="background:#e9ae63"></i>
+                    Mitbeteiligung
+                </span>
+            </div>
+            <p class="muscles" id="muscleText"></p>
+            <p id="tip"></p>
+            <p class="note">Schematische Muskelübersicht, keine medizinische Anatomiezeichnung. Beteiligung variiert mit Technik und Gerät.</p>
+        </div>
+    </div>
+    <script src="./steps.js"></script>
+    <script src="./training-tools.js"></script>
+    <script>
+    const plans = {
+        A: {
+            desc: 'Upper A · Oberkörper · ca. 75–90 Minuten',
+            items: [
+                ['Brustdrücken an der Multipresse (flache Bank)', '3 × 6–10'],
+                ['Rudern mit Bruststütze', '3 × 8–12'],
+                ['Latzug zur Brust', '3 × 8–12'],
+                ['Schrägbank-Brustpresse', '2 × 8–12'],
+                ['Seitheben Maschine', '3 × 12–20'],
+                ['Reverse Butterfly', '2 × 12–20'],
+                ['Bizepscurls Maschine', '3 × 10–15'],
+                ['Trizepsdrücken am Kabel', '3 × 10–15'],
+                ['Cardio · tägliche Schritte', 'Tägliches Ziel: 10.000 Schritte · ab 8.000 automatisch erledigt']
+            ]
+        },
+        B: {
+            desc: 'Lower A · Unterkörper · ca. 75–90 Minuten',
+            items: [
+                ['Hackenschmidt-Kniebeuge', '3 × 6–10'],
+                ['Hip Thrust Maschine', '3 × 8–12'],
+                ['Sitzender Beinbeuger', '3 × 8–12'],
+                ['Beinstrecker', '2 × 10–15'],
+                ['Wadenheben Maschine', '3 × 10–15'],
+                ['Bauchcrunch Maschine', '3 × 12–15'],
+                ['Cardio · tägliche Schritte', 'Tägliches Ziel: 10.000 Schritte · ab 8.000 automatisch erledigt']
+            ]
+        },
+        A2: {
+            desc: 'Upper B · Oberkörper · ca. 75–90 Minuten',
+            items: [
+                ['Schrägbank-Brustpresse', '3 × 8–12'],
+                ['Neutraler Latzug', '3 × 8–12'],
+                ['Sitzendes Kabelrudern', '3 × 8–12'],
+                ['Butterfly Maschine', '2 × 12–15'],
+                ['Seitheben am Kabel', '3 × 12–20'],
+                ['Reverse Butterfly', '2 × 12–20'],
+                ['Hammercurls am Kabel', '3 × 10–15'],
+                ['Trizepsdrücken über Kopf', '3 × 10–15'],
+                ['Cardio · tägliche Schritte', 'Tägliches Ziel: 10.000 Schritte · ab 8.000 automatisch erledigt']
+            ]
+        },
+        C: {
+            desc: 'Lower B · Unterkörper · ca. 75–90 Minuten',
+            items: [
+                ['Beinpresse', '3 × 8–12'],
+                ['Kabel Pull-Through', '2 × 10–15'],
+                ['Liegender Beinbeuger', '3 × 10–15'],
+                ['Beinstrecker', '2 × 12–15'],
+                ['Abduktorenmaschine', '2 × 12–20'],
+                ['Wadenheben Maschine', '3 × 12–20'],
+                ['Bauchcrunch am Kabel', '3 × 12–15'],
+                ['Cardio · tägliche Schritte', 'Tägliches Ziel: 10.000 Schritte · ab 8.000 automatisch erledigt']
+            ]
+        }
+    };
+    const defaultPlanByDay = ({1:'A',3:'B',5:'A2',6:'C'})[new Date().getDay()] || 'A';
+    let plan = localStorage.getItem('fitness-selected-plan-upperlower-v2') || defaultPlanByDay;
+    if (!plans[plan])
+        plan = 'A';
+    const key = p => 'fitness-checks-upperlower-v2-' + p; // Neue Checklisten getrennt halten; alte Trainingshaken bleiben erhalten.
+    function getChecks() {
+        let state = {};
+        try {
+            state = JSON.parse(localStorage.getItem(key(plan))) || {}
+        } catch {}
+        plans[plan].items.forEach(([name, , slot], i) => {
+            if (name.startsWith('Cardio'))
+                state[slot ?? i] = FitnessSteps.complete() || FitnessSteps.manualCardio(plan)
+        });
+        return state
+    }
+    const library = {
+        'Beinpresse': [['quads', 'glutes'], ['hamstrings', 'calves'], 'Vorderer Oberschenkel, Gesäß', 'Hinterer Oberschenkel, Waden', 'Füße stabil halten, Knie in Richtung der Zehen bewegen.'],
+        'Brustpresse': [['chest'], ['triceps', 'frontdelts'], 'Brust', 'Trizeps, vordere Schulter', 'Schulterblätter stabil halten und kontrolliert drücken.'],
+        'Latzug zur Brust': [['lats'], ['biceps', 'upperback'], 'Breiter Rücken (Latissimus)', 'Bizeps, oberer Rücken', 'Stange zur oberen Brust ziehen, nicht in den Nacken.'],
+        'Beinbeuger': [['hamstrings'], ['calves'], 'Hintere Oberschenkel', 'Waden (unterstützend)', 'Bewegung ohne Schwung ausführen.'],
+        'Seitheben': [['sidedelts'], ['traps'], 'Seitliche Schulter', 'Oberer Trapezmuskel', 'Arme seitlich kontrolliert heben, Schultern nicht hochziehen.'],
+        'Bizepscurls': [['biceps'], ['forearms'], 'Bizeps', 'Unterarme', 'Ellbogen ruhig halten, Gewicht nicht hochschwingen.'],
+        'Trizeps am Kabel': [['triceps'], ['forearms'], 'Trizeps', 'Unterarme', 'Ellbogen nah am Körper halten.'],
+        'Trizepsdrücken': [['triceps'], ['forearms'], 'Trizeps', 'Unterarme', 'Oberarme ruhig halten, Ellenbogen strecken.'],
+        'Bauchcrunch am Kabel': [['abs'], ['obliques'], 'Gerader Bauchmuskel', 'Seitliche Bauchmuskeln', 'Rumpf einrollen statt mit den Armen zu ziehen.'],
+        'Bauchcrunch': [['abs'], ['obliques'], 'Gerader Bauchmuskel', 'Seitliche Bauchmuskeln', 'Wirbelsäule kontrolliert einrollen, nicht am Kopf ziehen.'],
+        'Hackenschmidt-Kniebeuge': [['quads', 'glutes'], ['hamstrings', 'calves'], 'Vorderer Oberschenkel, Gesäß', 'Hinterer Oberschenkel, Waden', 'So tief gehen, wie du stabil und schmerzfrei bleibst.'],
+        'Rudern mit Bruststütze': [['upperback', 'lats'], ['biceps', 'reardelts'], 'Oberer Rücken, Latissimus', 'Bizeps, hintere Schulter', 'Brust an der Stütze lassen und Ellbogen nach hinten ziehen.'],
+        'Rudern am Kabel': [['upperback', 'lats'], ['biceps', 'reardelts'], 'Oberer Rücken, Latissimus', 'Bizeps, hintere Schulter', 'Rumpf stabil halten und Griff zum Oberbauch ziehen.'],
+        'Schrägbank-Brustpresse': [['upperchest'], ['triceps', 'frontdelts'], 'Oberer Brustbereich', 'Trizeps, vordere Schulter', 'Schrägbank moderat einstellen, Schultern stabilisieren.'],
+        'Schulterdrücken': [['frontdelts', 'sidedelts'], ['triceps'], 'Vordere und seitliche Schulter', 'Trizeps', 'Gewicht kontrolliert über Kopf drücken.'],
+        'Reverse Butterfly': [['reardelts', 'upperback'], ['traps'], 'Hintere Schulter, oberer Rücken', 'Trapezmuskel', 'Arme seitlich nach hinten führen, ohne Schwung.'],
+        'Wadenheben': [['calves'], [], 'Wadenmuskulatur', '—', 'Fersen kontrolliert senken und anheben.'],
+        'Plank': [['abs'], ['obliques', 'glutes', 'lowerback'], 'Bauchmuskulatur', 'Seitlicher Bauch, Gesäß, Rückenstrecker', 'Körper gerade halten und ruhig weiteratmen.'],
+        'Goblet Squat': [['quads', 'glutes'], ['abs', 'lowerback'], 'Vorderer Oberschenkel, Gesäß', 'Rumpfmuskulatur', 'Hantel vor der Brust halten und die Knie in Richtung der Zehen führen.'],
+        'Rumänisches Kreuzheben mit Kurzhanteln': [['hamstrings', 'glutes'], ['lowerback', 'forearms'], 'Hintere Oberschenkel, Gesäß', 'Rückenstrecker, Unterarme', 'Knie leicht beugen, Hüfte nach hinten schieben und Hanteln nah an den Beinen führen.'],
+        'Kurzhantel-Bankdrücken': [['chest'], ['triceps', 'frontdelts'], 'Brust', 'Trizeps, vordere Schulter', 'Füße fest aufstellen und beide Hanteln kontrolliert absenken.'],
+        'Einarmiges Kurzhantelrudern': [['upperback', 'lats'], ['biceps', 'reardelts'], 'Oberer Rücken, Latissimus', 'Bizeps, hintere Schulter', 'Mit der freien Hand abstützen und den Ellbogen Richtung Hüfte ziehen.'],
+        'Face Pulls am Kabel': [['reardelts', 'upperback'], ['traps'], 'Hintere Schulter, oberer Rücken', 'Trapezmuskel', 'Seil auf Gesichtshöhe ziehen und dabei den Rumpf ruhig halten.'],
+        'Dead Bug': [['abs', 'obliques'], [], 'Bauchmuskulatur', '—', 'Gegenüberliegenden Arm und Bein langsam absenken und den unteren Rücken stabil halten.'],
+        'Cardio': [['quads', 'calves', 'glutes'], ['hamstrings'], 'Beine und Gesäß (je nach Gerät)', 'Herz-Kreislauf-System', 'Moderat trainieren: Sprechen sollte noch möglich sein.'],
+        'Brustdrücken an der Multipresse (flache Bank)': [['chest'], ['triceps', 'frontdelts'], 'Brust', 'Trizeps, vordere Schulter', 'Bank flach einstellen, Schulterblätter stabil halten und die Stange kontrolliert zur Brust absenken.'],
+        'Seitheben Maschine': [['sidedelts'], ['traps'], 'Seitliche Schulter', 'Oberer Trapezmuskel', 'Arme kontrolliert seitlich anheben und Schultern nicht hochziehen.'],
+        'Bizepscurls Maschine': [['biceps'], ['forearms'], 'Bizeps', 'Unterarme', 'Ellbogen an der Auflage halten und die Bewegung ohne Schwung ausführen.'],
+        'Trizepsdrücken am Kabel': [['triceps'], ['forearms'], 'Trizeps', 'Unterarme', 'Ellbogen nah am Körper halten und kontrolliert strecken.'],
+        'Hip Thrust Maschine': [['glutes'], ['hamstrings', 'quads'], 'Gesäß', 'Hintere Oberschenkel, Quadrizeps', 'Becken kontrolliert strecken und nicht ins Hohlkreuz ausweichen.'],
+        'Sitzender Beinbeuger': [['hamstrings'], ['calves'], 'Hintere Oberschenkel', 'Waden (unterstützend)', 'Hüfte an der Sitzfläche halten und das Gewicht kontrolliert bewegen.'],
+        'Beinstrecker': [['quads'], [], 'Vorderer Oberschenkel', '—', 'Knieachse an der Geräteachse ausrichten und kontrolliert strecken.'],
+        'Wadenheben Maschine': [['calves'], [], 'Wadenmuskulatur', '—', 'Fersen langsam absenken und über den Fußballen vollständig anheben.'],
+        'Bauchcrunch Maschine': [['abs'], ['obliques'], 'Gerader Bauchmuskel', 'Seitliche Bauchmuskeln', 'Rumpf einrollen und nicht mit den Armen am Griff ziehen.'],
+        'Neutraler Latzug': [['lats'], ['biceps', 'upperback'], 'Breiter Rücken (Latissimus)', 'Bizeps, oberer Rücken', 'Neutralen Griff zur oberen Brust ziehen und den Oberkörper stabil halten.'],
+        'Sitzendes Kabelrudern': [['upperback', 'lats'], ['biceps', 'reardelts'], 'Oberer Rücken, Latissimus', 'Bizeps, hintere Schulter', 'Griff zum Oberbauch ziehen und den Rumpf ruhig halten.'],
+        'Butterfly Maschine': [['chest'], ['frontdelts'], 'Brust', 'Vordere Schulter', 'Arme leicht gebeugt halten und die Griffe kontrolliert zusammenführen.'],
+        'Seitheben am Kabel': [['sidedelts'], ['traps'], 'Seitliche Schulter', 'Oberer Trapezmuskel', 'Kabel mit leicht gebeugtem Arm seitlich anheben und Schwung vermeiden.'],
+        'Hammercurls am Kabel': [['biceps'], ['forearms'], 'Bizeps und Brachialis', 'Unterarme', 'Neutralen Griff halten und Ellbogen ruhig am Körper lassen.'],
+        'Trizepsdrücken über Kopf': [['triceps'], ['shoulders'], 'Trizeps, besonders langer Kopf', 'Schulter stabilisiert', 'Oberarme neben dem Kopf stabil halten und Ellbogen kontrolliert strecken.'],
+        'Kabel Pull-Through': [['glutes', 'hamstrings'], ['lowerback'], 'Gesäß, hintere Oberschenkel', 'Rückenstrecker', 'Hüfte nach hinten schieben und aus der Hüftstreckung aufrichten.'],
+        'Liegender Beinbeuger': [['hamstrings'], ['calves'], 'Hintere Oberschenkel', 'Waden (unterstützend)', 'Becken auf der Bank halten und ohne Schwung beugen.'],
+        'Abduktorenmaschine': [['glutes'], [], 'Seitliche Gesäßmuskulatur', '—', 'Beine kontrolliert nach außen führen und die Rückbewegung langsam ausführen.'],
+    };
+    const normalize = n => n.startsWith('Cardio') ? 'Cardio' : n.replace(', leicht', '');
+    function anatomy(view, primary, secondary) {
+        const color = id => primary.includes(id) ? '#4bd3a0' : secondary.includes(id) ? '#e9ae63' : '#41536c';
+        const shape = (id, d) => `<path d="${d}" fill="${color(id)}" stroke="#8ca1b8" stroke-width="1.1"/>`;
+        let svg = `<svg viewBox="0 0 160 280" role="img" aria-label="Schematische Körperansicht ${view === 'front' ? 'von vorn' : 'von hinten'} mit markierten Muskeln"><circle cx="80" cy="25" r="17" fill="#71849c"/><path d="M63 44 L97 44 L118 62 L110 143 L95 153 L65 153 L50 143 L42 62 Z" fill="#71849c"/><path d="M65 148 L79 151 L76 257 L62 257 L57 178 Z M81 151 L95 148 L103 178 L98 257 L84 257 Z" fill="#71849c"/><path d="M44 64 L30 70 L16 139 L30 144 L55 95 Z M116 64 L130 70 L144 139 L130 144 L105 95 Z" fill="#71849c"/>`;
+        if (view === 'front') {
+            svg += shape('traps', 'M63 45 L80 53 L97 45 L105 55 L80 62 L55 55 Z');
+            svg += shape('frontdelts', 'M48 57 Q35 62 34 78 L48 88 L60 62 Z M112 57 Q125 62 126 78 L112 88 L100 62 Z');
+            svg += shape('sidedelts', 'M40 62 Q31 68 30 82 L41 89 L49 69 Z M120 62 Q129 68 130 82 L119 89 L111 69 Z');
+            svg += shape('upperchest', 'M61 61 L79 64 L79 81 L55 78 Z M81 64 L99 61 L105 78 L81 81 Z');
+            svg += shape('chest', 'M55 78 L79 82 L79 102 L56 100 Z M81 82 L105 78 L104 100 L81 102 Z');
+            svg += shape('abs', 'M65 104 L95 104 L94 143 L66 143 Z');
+            svg += shape('obliques', 'M54 105 L64 107 L65 142 L55 139 Z M96 107 L106 105 L105 139 L95 142 Z');
+            svg += shape('biceps', 'M35 89 L47 92 L39 119 L27 117 Z M113 92 L125 89 L133 117 L121 119 Z');
+            svg += shape('forearms', 'M26 121 L38 124 L29 144 L17 140 Z M122 124 L134 121 L143 140 L131 144 Z');
+            svg += shape('quads', 'M64 159 L77 161 L74 212 L60 210 Z M83 161 L96 159 L100 210 L86 212 Z');
+            svg += shape('calves', 'M61 220 L73 220 L72 252 L62 252 Z M87 220 L99 220 L98 252 L88 252 Z');
+        } else {
+            svg += shape('traps', 'M64 46 L80 54 L96 46 L107 72 L80 84 L53 72 Z');
+            svg += shape('reardelts', 'M47 58 L62 65 L53 89 L36 80 Z M113 58 L98 65 L107 89 L124 80 Z');
+            svg += shape('upperback', 'M62 79 L98 79 L101 111 L59 111 Z');
+            svg += shape('lats', 'M56 89 L69 107 L68 143 L55 137 Z M104 89 L91 107 L92 143 L105 137 Z');
+            svg += shape('lowerback', 'M69 113 L91 113 L94 143 L66 143 Z');
+            svg += shape('triceps', 'M33 88 L46 93 L39 121 L26 117 Z M114 93 L127 88 L134 117 L121 121 Z');
+            svg += shape('forearms', 'M26 121 L38 124 L29 144 L17 140 Z M122 124 L134 121 L143 140 L131 144 Z');
+            svg += shape('glutes', 'M63 144 L80 148 L80 175 L59 174 Z M80 148 L97 144 L101 174 L80 175 Z');
+            svg += shape('hamstrings', 'M60 177 L77 178 L74 216 L60 216 Z M83 178 L100 177 L100 216 L86 216 Z');
+            svg += shape('calves', 'M60 220 L74 220 L71 255 L62 255 Z M86 220 L100 220 L98 255 L89 255 Z');
+        }
+        return svg + '</svg>';
+    }
+    function showInfo(name, detail) {
+        const data = library[normalize(name)] || library.Cardio;
+        document.querySelector('#modalTitle').textContent = name;
+        document.querySelector('#modalDetail').textContent = detail;
+        document.querySelector('#diagram').innerHTML = ['front', 'back'].map(v => `<figure>${anatomy(v, data[0], data[1])}<figcaption>${v === 'front' ? 'Vorderseite' : 'Rückseite'}</figcaption></figure>`).join('');
+        document.querySelector('#muscleText').textContent = 'Hauptmuskeln: ' + data[2] + ' · Unterstützend: ' + data[3];
+        document.querySelector('#tip').textContent = 'Ausführung: ' + data[4];
+        document.querySelector('#modal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+        document.querySelector('#closeModal').focus()
+    }
+    function hideInfo() {
+        document.querySelector('#modal').classList.remove('open');
+        document.body.style.overflow = ''
+    }
+    document.querySelector('#closeModal').addEventListener('click', hideInfo);
+    document.querySelector('#modal').addEventListener('click', e => {
+        if (e.target.id === 'modal')
+            hideInfo()
+    });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape')
+            hideInfo()
+    });
+    function render() {
+        document.querySelectorAll('.tab').forEach(b => {
+            b.classList.toggle('active', b.dataset.plan === plan);
+            b.setAttribute('aria-selected', String(b.dataset.plan === plan))
+        });
+        document.querySelector('#description').textContent = plans[plan].desc;
+        const state = getChecks(),
+            items = plans[plan].items,
+            done = items.filter(([, , slot], i) => state[slot ?? i]).length;
+        document.querySelector('#counter').textContent = done + ' / ' + items.length;
+        document.querySelector('#fill').style.width = (done / items.length * 100) + '%';
+        const root = document.querySelector('#items');
+        root.replaceChildren();
+        items.forEach(([name, detail, originalSlot], i) => {
+            const slot = originalSlot ?? i;
+            const row = document.createElement('div');
+            row.className = 'item' + (state[slot] ? ' done' : '');
+            const cb = document.createElement('input');
+            cb.type = 'checkbox';
+            cb.id = 'check-' + plan + '-' + i;
+            cb.checked = !!state[slot];
+            if (name.startsWith('Cardio') && FitnessSteps.complete()) {
+                cb.disabled = true;
+                cb.title = 'Durch mindestens 8.000 heutige Schritte erledigt'
+            }
+            cb.setAttribute('aria-label', name + ' abgeschlossen');
+            cb.addEventListener('change', () => {
+                if (name.startsWith('Cardio')) {
+                    FitnessSteps.setManualCardio(plan, cb.checked)
+                } else {
+                    const next = getChecks();
+                    next[slot] = cb.checked;
+                    localStorage.setItem(key(plan), JSON.stringify(next))
+                }
+                render()
+            });
+            const box = document.createElement('label');
+            box.className = 'details';
+            box.htmlFor = cb.id;
+            const strong = document.createElement('strong');
+            strong.textContent = name;
+            const small = document.createElement('small');
+            small.textContent = detail;
+            box.append(strong, small);
+            const info = document.createElement('button');
+            info.type = 'button';
+            info.className = 'info';
+            info.textContent = 'Muskeln ⓘ';
+            info.setAttribute('aria-label', 'Muskelübersicht für ' + name + ' anzeigen');
+            info.addEventListener('click', () => showInfo(name, detail));
+            row.append(cb, box, info);
+            const card = document.createElement('div');
+            card.className = 'exercise-card';
+            card.append(row);
+            if (!name.startsWith('Cardio'))
+                card.append(TrainingTools.exerciseLog(plan, name, detail));
+            root.append(card);
+            if (name.startsWith('Cardio'))
+                root.append(FitnessSteps.panel(render))
+        })
+    }
+    document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => {
+        plan = b.dataset.plan;
+        localStorage.setItem('fitness-selected-plan-upperlower-v2', plan);
+        render()
+    }));
+    document.querySelector('#reset').addEventListener('click', () => {
+        if (confirm('Training abschließen und alle Haken für Plan ' + plan + ' zurücksetzen?')) {
+            localStorage.removeItem(key(plan));
+            FitnessSteps.setManualCardio(plan, false);
+            render();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            })
+        }
+    });
+    render();
+    const organizerStore = 'fitness-organizer-weeks-v1';
+    let weekOverrides = {};
+    try {
+        weekOverrides = JSON.parse(localStorage.getItem(organizerStore)) || {}
+    } catch {}
+    let calendarMonth = new Date();
+    calendarMonth = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth(), 1);
+    const sportDays = [1, 3, 5, 6];
+    function scheduledPlan(date) {
+        const day = date.getDay();
+        if (day === 1)
+            return 'Upper A';
+        if (day === 3)
+            return 'Lower A';
+        if (day === 5)
+            return 'Upper B';
+        if (day === 6)
+            return 'Lower B';
+        return 'Pause';
+    }
+    function isoWeek(date) {
+        const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+        d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+        const year = d.getUTCFullYear();
+        return {
+            year,
+            week: Math.ceil((((d - new Date(Date.UTC(year, 0, 1))) / 86400000) + 1) / 7)
+        }
+    }
+    function weekKey(date) {
+        const w = isoWeek(date);
+        return w.year + '-W' + String(w.week).padStart(2, '0')
+    }
+    function sportTime(date) {
+        return weekOverrides[weekKey(date)] === true ? '13:00' : isoWeek(date).week % 2 ? '11:00' : '15:00'
+    }
+    function plusDays(date, n) {
+        return new Date(date.getFullYear(), date.getMonth(), date.getDate() + n)
+    }
+    function renderCalendar() {
+        const year = calendarMonth.getFullYear(),
+            month = calendarMonth.getMonth(),
+            first = new Date(year, month, 1),
+            last = new Date(year, month + 1, 0),
+            start = plusDays(first, -((first.getDay() + 6) % 7)),
+            end = plusDays(last, 6 - ((last.getDay() + 6) % 7));
+        document.querySelector('#monthTitle').textContent = first.toLocaleDateString('de-DE', {
+            month: 'long',
+            year: 'numeric'
+        });
+        const grid = document.querySelector('#calendarGrid');
+        grid.replaceChildren();
+        for (const name of ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So']) {
+            const el = document.createElement('div');
+            el.className = 'weekday';
+            el.textContent = name;
+            grid.append(el)
+        }
+        const today = new Date();
+        for (let d = start; d <= end; d = plusDays(d, 1)) {
+            const el = document.createElement('div');
+            el.className = 'calday' + (d.getMonth() !== month ? ' outside' : '') + (d.toDateString() === today.toDateString() ? ' today' : '');
+            el.textContent = d.getDate();
+            if (sportDays.includes(d.getDay())) {
+                const small = document.createElement('small');
+                small.textContent = 'Plan ' + scheduledPlan(d);
+                const time = document.createElement('small');
+                time.textContent = sportTime(d);
+                el.append(small, time)
+            }
+            grid.append(el)
+        }
+        const weeks = document.querySelector('#calendarWeeks');
+        weeks.replaceChildren();
+        for (let monday = start; monday <= end; monday = plusDays(monday, 7)) {
+            const w = isoWeek(monday),
+                key = weekKey(monday),
+                night = weekOverrides[key] === true,
+                row = document.createElement('div');
+            row.className = 'weekrow';
+            const head = document.createElement('div');
+            head.className = 'weekhead';
+            const title = document.createElement('strong');
+            title.textContent = 'KW ' + w.week + ' · ' + w.year;
+            const button = document.createElement('button');
+            button.className = 'night';
+            button.setAttribute('aria-pressed', String(night));
+            button.setAttribute('aria-label', 'Nachtschicht für KW ' + w.week + ' ' + w.year);
+            button.textContent = night ? '✓ Nachtschicht · 13:00' : 'Nachtschicht → 13:00';
+            button.addEventListener('click', () => {
+                if (weekOverrides[key])
+                    delete weekOverrides[key];
+                else
+                    weekOverrides[key] = true;
+                localStorage.setItem(organizerStore, JSON.stringify(weekOverrides));
+                renderCalendar();
+                document.querySelector('#calendarStatus').textContent = 'KW ' + w.week + ': Sport startet um ' + sportTime(monday) + ' Uhr.'
+            });
+            head.append(title, button);
+            const dates = document.createElement('div');
+            dates.className = 'weekdates';
+            dates.textContent = [0, 2, 4, 5].map(offset => {
+                const d = plusDays(monday, offset);
+                return d.toLocaleDateString('de-DE', {
+                    weekday: 'short',
+                    day: '2-digit',
+                    month: '2-digit'
+                }) + ' · Plan ' + scheduledPlan(d) + ' · ' + sportTime(d) + ' Uhr'
+            }).join(' / ');
+            row.append(head, dates);
+            weeks.append(row)
+        }
+    }
+    document.querySelector('#organizerToggle').addEventListener('click', () => {
+        const panel = document.querySelector('#organizer');
+        panel.hidden = !panel.hidden;
+        document.querySelector('#organizerToggle').setAttribute('aria-expanded', String(!panel.hidden));
+        if (!panel.hidden) {
+            renderCalendar();
+            panel.scrollIntoView({
+                block: 'start'
+            })
+        }
+    });
+    document.querySelector('#calendarToggle').addEventListener('click', () => {
+        const content = document.querySelector('#calendarContent');
+        content.hidden = !content.hidden;
+        document.querySelector('#calendarToggle').setAttribute('aria-expanded', String(!content.hidden))
+    });
+    for (const [id, offset] of [['prevMonth', -1], ['nextMonth', 1]])
+        document.querySelector('#' + id).addEventListener('click', () => {
+            calendarMonth = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + offset, 1);
+            renderCalendar()
+        });
+    document.querySelector('#todayMonth').addEventListener('click', () => {
+        const now = new Date();
+        calendarMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        renderCalendar()
+    });
+    </script>
+    
+<script>
+let stepsDay = FitnessSteps.today();
+function refreshStepsDay() {
+    if (stepsDay !== FitnessSteps.today()) {
+        stepsDay = FitnessSteps.today();
+        render()
+    }
+}
+setInterval(refreshStepsDay, 30000);
+document.addEventListener('visibilitychange', () => {
+    if (!document.hidden)
+        refreshStepsDay()
+});
+window.addEventListener('storage', () => render());
+
+    function setupDataBackup() {
+        const exportButton = document.querySelector('#backupExport');
+        const fileInput = document.querySelector('#backupFile');
+        const status = document.querySelector('#backupStatus');
+        exportButton.addEventListener('click', () => {
+            const storage = {};
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.startsWith('fitness-')) storage[key] = localStorage.getItem(key);
+            }
+            const payload = {
+                app: 'Mein Training',
+                formatVersion: 1,
+                exportedAt: new Date().toISOString(),
+                storage
+            };
+            const blob = new Blob([JSON.stringify(payload, null, 2)], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'mein-training-backup-' + FitnessSteps.today() + '.json';
+            document.body.append(link);
+            link.click();
+            link.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+            status.textContent = Object.keys(storage).length + ' gespeicherte Einträge exportiert.';
+        });
+        fileInput.addEventListener('change', async () => {
+            const file = fileInput.files && fileInput.files[0];
+            if (!file) return;
+            try {
+                const payload = JSON.parse(await file.text());
+                if (!payload || payload.app !== 'Mein Training' || !payload.storage || typeof payload.storage !== 'object') {
+                    throw new Error('Diese Datei ist kein gültiges Mein-Training-Backup.');
+                }
+                let count = 0;
+                for (const [key, value] of Object.entries(payload.storage)) {
+                    if (key.startsWith('fitness-') && typeof value === 'string') {
+                        localStorage.setItem(key, value);
+                        count++;
+                    }
+                }
+                status.textContent = count + ' Einträge importiert. Die Seite wird neu geladen …';
+                setTimeout(() => location.reload(), 700);
+            } catch (error) {
+                status.textContent = 'Import fehlgeschlagen: ' + error.message;
+            } finally {
+                fileInput.value = '';
+            }
+        });
+    }
+    setupDataBackup();
+
+    TrainingTools.setupTimer();
+TrainingTools.setupPlanSwipe();
+
+</script>
+</body>
+</html>
