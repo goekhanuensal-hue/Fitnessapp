@@ -120,6 +120,8 @@ main { padding: calc(60px + env(safe-area-inset-top)) 0 calc(84px + env(safe-are
 .night[aria-pressed="true"] { background: var(--ink); }
 .exercise-log { margin-top: 13px; border-top: 1px solid var(--line); padding-top: 9px; }
 .exercise-log summary { color: var(--secondary); cursor: pointer; padding: 7px 0; font-size: .875rem; }
+.exercise-technique { margin-top: 5px; }
+.exercise-technique p { margin: 4px 0 8px; font-size: .875rem; line-height: 1.45; }
 .exercise-log form { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); align-items: end; gap: 10px; margin-top: 10px; }
 .exercise-log label { display: grid; gap: 5px; font-size: .8125rem; color: var(--secondary); }
 .exercise-log input, .steps-form input { background: var(--page); color: var(--ink); border: 1px solid var(--line); border-radius: 12px; padding: 9px 12px; min-height: 44px; min-width: 0; width: 100%; }

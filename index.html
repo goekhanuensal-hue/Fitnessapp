@@ -210,23 +210,23 @@
         return state
     }
     const library = {
-        'Beinpresse': [['quads', 'glutes'], ['hamstrings', 'calves'], 'Vorderer Oberschenkel, Gesäß', 'Hinterer Oberschenkel, Waden', 'Füße stabil halten, Knie in Richtung der Zehen bewegen.'],
+        'Beinpresse': [['quads', 'glutes'], ['hamstrings', 'calves'], 'Vorderer Oberschenkel, Gesäß', 'Hinterer Oberschenkel, Waden', 'Setz die ganzen Füße auf die Plattform und beug die Knie in Richtung der Zehen. Senk nur so weit ab, wie das Becken an der Lehne bleibt. Drück die Knie oben nicht ruckartig durch.'],
         'Brustpresse': [['chest'], ['triceps', 'frontdelts'], 'Brust', 'Trizeps, vordere Schulter', 'Schulterblätter stabil halten und kontrolliert drücken.'],
-        'Latzug zur Brust': [['lats'], ['biceps', 'upperback'], 'Breiter Rücken (Latissimus)', 'Bizeps, oberer Rücken', 'Stange zur oberen Brust ziehen, nicht in den Nacken.'],
+        'Latzug zur Brust': [['lats'], ['biceps', 'upperback'], 'Breiter Rücken (Latissimus)', 'Bizeps, oberer Rücken', 'Klemm die Oberschenkel unter das Polster und zieh die Stange zur oberen Brust. Ellbogen nach unten führen, Oberkörper ruhig halten.'],
         'Beinbeuger': [['hamstrings'], ['calves'], 'Hintere Oberschenkel', 'Waden (unterstützend)', 'Bewegung ohne Schwung ausführen.'],
         'Seitheben': [['sidedelts'], ['traps'], 'Seitliche Schulter', 'Oberer Trapezmuskel', 'Arme seitlich kontrolliert heben, Schultern nicht hochziehen.'],
         'Bizepscurls': [['biceps'], ['forearms'], 'Bizeps', 'Unterarme', 'Ellbogen ruhig halten, Gewicht nicht hochschwingen.'],
         'Trizeps am Kabel': [['triceps'], ['forearms'], 'Trizeps', 'Unterarme', 'Ellbogen nah am Körper halten.'],
         'Trizepsdrücken': [['triceps'], ['forearms'], 'Trizeps', 'Unterarme', 'Oberarme ruhig halten, Ellenbogen strecken.'],
-        'Bauchcrunch am Kabel': [['abs'], ['obliques'], 'Gerader Bauchmuskel', 'Seitliche Bauchmuskeln', 'Rumpf einrollen statt mit den Armen zu ziehen.'],
+        'Bauchcrunch am Kabel': [['abs'], ['obliques'], 'Gerader Bauchmuskel', 'Seitliche Bauchmuskeln', 'Knie vor dem Kabelzug und halte das Seil am Kopf. Roll die Rippen zum Becken ein. Hüfte und Arme bleiben dabei möglichst ruhig.'],
         'Bauchcrunch': [['abs'], ['obliques'], 'Gerader Bauchmuskel', 'Seitliche Bauchmuskeln', 'Wirbelsäule kontrolliert einrollen, nicht am Kopf ziehen.'],
-        'Hackenschmidt-Kniebeuge': [['quads', 'glutes'], ['hamstrings', 'calves'], 'Vorderer Oberschenkel, Gesäß', 'Hinterer Oberschenkel, Waden', 'So tief gehen, wie du stabil und schmerzfrei bleibst.'],
-        'Rudern mit Bruststütze': [['upperback', 'lats'], ['biceps', 'reardelts'], 'Oberer Rücken, Latissimus', 'Bizeps, hintere Schulter', 'Brust an der Stütze lassen und Ellbogen nach hinten ziehen.'],
+        'Hackenschmidt-Kniebeuge': [['quads', 'glutes'], ['hamstrings', 'calves'], 'Vorderer Oberschenkel, Gesäß', 'Hinterer Oberschenkel, Waden', 'Lehn Rücken und Schultern an die Polster. Beug die Knie kontrolliert in Richtung der Zehen. Lass die Fersen auf der Plattform und geh nur so tief, wie du stabil bleibst.'],
+        'Rudern mit Bruststütze': [['upperback', 'lats'], ['biceps', 'reardelts'], 'Oberer Rücken, Latissimus', 'Bizeps, hintere Schulter', 'Zieh die Griffe zu den unteren Rippen und führ die Ellbogen nach hinten. Brust am Polster lassen und die Griffe kontrolliert vorlassen.'],
         'Rudern am Kabel': [['upperback', 'lats'], ['biceps', 'reardelts'], 'Oberer Rücken, Latissimus', 'Bizeps, hintere Schulter', 'Rumpf stabil halten und Griff zum Oberbauch ziehen.'],
-        'Schrägbank-Brustpresse': [['upperchest'], ['triceps', 'frontdelts'], 'Oberer Brustbereich', 'Trizeps, vordere Schulter', 'Schrägbank moderat einstellen, Schultern stabilisieren.'],
-        'Schulterdrücken Maschine': [['frontdelts', 'sidedelts'], ['triceps'], 'Vordere und seitliche Schulter', 'Trizeps', 'Sitzhöhe so einstellen, dass die Griffe auf Schulterhöhe starten. Rücken an der Lehne lassen und kontrolliert drücken.'],
+        'Schrägbank-Brustpresse': [['upperchest'], ['triceps', 'frontdelts'], 'Oberer Brustbereich', 'Trizeps, vordere Schulter', 'Stell den Sitz so ein, dass die Griffe auf Höhe der oberen Brust starten. Drück schräg nach oben und lass die Griffe langsam zurück. Rücken an der Lehne lassen.'],
+        'Schulterdrücken Maschine': [['frontdelts', 'sidedelts'], ['triceps'], 'Vordere und seitliche Schulter', 'Trizeps', 'Stell den Sitz so ein, dass die Griffe etwa auf Schulterhöhe starten. Drück kontrolliert nach oben und lass den Rücken an der Lehne.'],
         'Schulterdrücken': [['frontdelts', 'sidedelts'], ['triceps'], 'Vordere und seitliche Schulter', 'Trizeps', 'Gewicht kontrolliert über Kopf drücken.'],
-        'Reverse Butterfly': [['reardelts', 'upperback'], ['traps'], 'Hintere Schulter, oberer Rücken', 'Trapezmuskel', 'Arme seitlich nach hinten führen, ohne Schwung.'],
+        'Reverse Butterfly': [['reardelts', 'upperback'], ['traps'], 'Hintere Schulter, oberer Rücken', 'Trapezmuskel', 'Führ die Griffe mit leicht gebeugten Armen seitlich nach hinten. Brust am Polster lassen und die Arme ohne Schwung zurückführen.'],
         'Wadenheben': [['calves'], [], 'Wadenmuskulatur', '—', 'Fersen kontrolliert senken und anheben.'],
         'Plank': [['abs'], ['obliques', 'glutes', 'lowerback'], 'Bauchmuskulatur', 'Seitlicher Bauch, Gesäß, Rückenstrecker', 'Körper gerade halten und ruhig weiteratmen.'],
         'Goblet Squat': [['quads', 'glutes'], ['abs', 'lowerback'], 'Vorderer Oberschenkel, Gesäß', 'Rumpfmuskulatur', 'Hantel vor der Brust halten und die Knie in Richtung der Zehen führen.'],
@@ -236,21 +236,21 @@
         'Face Pulls am Kabel': [['reardelts', 'upperback'], ['traps'], 'Hintere Schulter, oberer Rücken', 'Trapezmuskel', 'Seil auf Gesichtshöhe ziehen und dabei den Rumpf ruhig halten.'],
         'Dead Bug': [['abs', 'obliques'], [], 'Bauchmuskulatur', '—', 'Gegenüberliegenden Arm und Bein langsam absenken und den unteren Rücken stabil halten.'],
         'Cardio': [['quads', 'calves', 'glutes'], ['hamstrings'], 'Beine und Gesäß (je nach Gerät)', 'Herz-Kreislauf-System', 'Moderat trainieren: Sprechen sollte noch möglich sein.'],
-        'Brustdrücken an der Multipresse (flache Bank)': [['chest'], ['triceps', 'frontdelts'], 'Brust', 'Trizeps, vordere Schulter', 'Bank flach einstellen, Schulterblätter stabil halten und die Stange kontrolliert zur Brust absenken.'],
-        'Seitheben Maschine': [['sidedelts'], ['traps'], 'Seitliche Schulter', 'Oberer Trapezmuskel', 'Arme kontrolliert seitlich anheben und Schultern nicht hochziehen.'],
-        'Bizepscurls Maschine': [['biceps'], ['forearms'], 'Bizeps', 'Unterarme', 'Ellbogen an der Auflage halten und die Bewegung ohne Schwung ausführen.'],
-        'Trizepsdrücken am Kabel': [['triceps'], ['forearms'], 'Trizeps', 'Unterarme', 'Ellbogen nah am Körper halten und kontrolliert strecken.'],
-        'Hip Thrust Maschine': [['glutes'], ['hamstrings', 'quads'], 'Gesäß', 'Hintere Oberschenkel, Quadrizeps', 'Becken kontrolliert strecken und nicht ins Hohlkreuz ausweichen.'],
-        'Sitzender Beinbeuger': [['hamstrings'], ['calves'], 'Hintere Oberschenkel', 'Waden (unterstützend)', 'Hüfte an der Sitzfläche halten und das Gewicht kontrolliert bewegen.'],
-        'Beinstrecker': [['quads'], [], 'Vorderer Oberschenkel', '—', 'Knieachse an der Geräteachse ausrichten und kontrolliert strecken.'],
-        'Wadenheben Maschine': [['calves'], [], 'Wadenmuskulatur', '—', 'Fersen langsam absenken und über den Fußballen vollständig anheben.'],
+        'Brustdrücken an der Multipresse (flache Bank)': [['chest'], ['triceps', 'frontdelts'], 'Brust', 'Trizeps, vordere Schulter', 'Sicherheitsstopps vorab mit leerer Stange testen. Füße fest aufstellen, Schulterblätter stabil halten und die Stange kontrolliert zur mittleren Brust senken. Ellbogen leicht am Körper anwinkeln.'],
+        'Seitheben Maschine': [['sidedelts'], ['traps'], 'Seitliche Schulter', 'Oberer Trapezmuskel', 'Heb die Arme seitlich bis etwa auf Schulterhöhe und senk sie langsam. Ellbogen leicht gebeugt lassen und die Schultern locker halten.'],
+        'Bizepscurls Maschine': [['biceps'], ['forearms'], 'Bizeps', 'Unterarme', 'Leg die Oberarme aufs Polster und beug die Ellbogen. Handgelenke gerade halten und das Gewicht langsam absenken.'],
+        'Trizepsdrücken am Kabel': [['triceps'], ['forearms'], 'Trizeps', 'Unterarme', 'Drück den Griff nach unten, bis die Arme gestreckt sind. Ellbogen dicht am Körper lassen und nur die Unterarme bewegen.'],
+        'Hip Thrust Maschine': [['glutes'], ['hamstrings', 'quads'], 'Gesäß', 'Hintere Oberschenkel, Quadrizeps', 'Drück die Hüfte über die Fersen nach oben und spann oben das Gesäß an. Rippen ruhig halten und die Bewegung beenden, bevor du ins Hohlkreuz gehst.'],
+        'Sitzender Beinbeuger': [['hamstrings'], ['calves'], 'Hintere Oberschenkel', 'Waden (unterstützend)', 'Richte die Knie an der Drehachse aus. Zieh das Rollenpolster mit den Fersen nach unten, während die Hüfte am Sitz bleibt. Langsam zurückführen.'],
+        'Beinstrecker': [['quads'], [], 'Vorderer Oberschenkel', '—', 'Richte die Knie an der Drehachse aus und stell das Polster knapp über den Knöcheln ein. Streck die Knie kontrolliert und senk das Gewicht langsam.'],
+        'Wadenheben Maschine': [['calves'], [], 'Wadenmuskulatur', '—', 'Stell die Fußballen auf die Kante. Senk die Fersen langsam und drück dich auf die Zehenspitzen. Ohne Federn oder Schwung arbeiten.'],
         'Bauchcrunch Maschine': [['abs'], ['obliques'], 'Gerader Bauchmuskel', 'Seitliche Bauchmuskeln', 'Rumpf einrollen und nicht mit den Armen am Griff ziehen.'],
-        'Neutraler Latzug': [['lats'], ['biceps', 'upperback'], 'Breiter Rücken (Latissimus)', 'Bizeps, oberer Rücken', 'Neutralen Griff zur oberen Brust ziehen und den Oberkörper stabil halten.'],
-        'Sitzendes Kabelrudern': [['upperback', 'lats'], ['biceps', 'reardelts'], 'Oberer Rücken, Latissimus', 'Bizeps, hintere Schulter', 'Griff zum Oberbauch ziehen und den Rumpf ruhig halten.'],
-        'Butterfly Maschine': [['chest'], ['frontdelts'], 'Brust', 'Vordere Schulter', 'Arme leicht gebeugt halten und die Griffe kontrolliert zusammenführen.'],
-        'Seitheben am Kabel': [['sidedelts'], ['traps'], 'Seitliche Schulter', 'Oberer Trapezmuskel', 'Kabel mit leicht gebeugtem Arm seitlich anheben und Schwung vermeiden.'],
-        'Hammercurls am Kabel': [['biceps'], ['forearms'], 'Bizeps und Brachialis', 'Unterarme', 'Neutralen Griff halten und Ellbogen ruhig am Körper lassen.'],
-        'Trizepsdrücken über Kopf': [['triceps'], ['shoulders'], 'Trizeps, besonders langer Kopf', 'Schulter stabilisiert', 'Oberarme neben dem Kopf stabil halten und Ellbogen kontrolliert strecken.'],
+        'Neutraler Latzug': [['lats'], ['biceps', 'upperback'], 'Breiter Rücken (Latissimus)', 'Bizeps, oberer Rücken', 'Zieh den Griff mit zueinander zeigenden Handflächen zur oberen Brust. Ellbogen nach unten ziehen und den Oberkörper ruhig halten.'],
+        'Sitzendes Kabelrudern': [['upperback', 'lats'], ['biceps', 'reardelts'], 'Oberer Rücken, Latissimus', 'Bizeps, hintere Schulter', 'Zieh den Griff zum Oberbauch und führ die Ellbogen nach hinten. Halt den Rumpf stabil und lass den Griff langsam wieder vor.'],
+        'Butterfly Maschine': [['chest'], ['frontdelts'], 'Brust', 'Vordere Schulter', 'Führ die Griffe vor der Brust zusammen. Lass die Ellbogen leicht gebeugt und öffne die Arme nur so weit, wie es sich in den Schultern gut anfühlt.'],
+        'Seitheben am Kabel': [['sidedelts'], ['traps'], 'Seitliche Schulter', 'Oberer Trapezmuskel', 'Stell dich seitlich zum tiefen Kabelzug. Heb den leicht gebeugten Arm bis etwa auf Schulterhöhe. Rumpf ruhig halten und langsam absenken.'],
+        'Hammercurls am Kabel': [['biceps'], ['forearms'], 'Bizeps und Brachialis', 'Unterarme', 'Greif das Seil mit zueinander zeigenden Handflächen und beug die Ellbogen. Oberarme am Körper lassen und ohne Schwung absenken.'],
+        'Trizepsdrücken über Kopf': [['triceps'], ['shoulders'], 'Trizeps, besonders langer Kopf', 'Schulter stabilisiert', 'Streck die Unterarme am Kabel nach vorn oben. Oberarme neben dem Kopf ruhig halten und ein Ausweichen ins Hohlkreuz vermeiden.'],
         'Kabel Pull-Through': [['glutes', 'hamstrings'], ['lowerback'], 'Gesäß, hintere Oberschenkel', 'Rückenstrecker', 'Hüfte nach hinten schieben und aus der Hüftstreckung aufrichten.'],
         'Liegender Beinbeuger': [['hamstrings'], ['calves'], 'Hintere Oberschenkel', 'Waden (unterstützend)', 'Becken auf der Bank halten und ohne Schwung beugen.'],
         'Abduktorenmaschine': [['glutes'], [], 'Seitliche Gesäßmuskulatur', '—', 'Beine kontrolliert nach außen führen und die Rückbewegung langsam ausführen.'],
@@ -310,6 +310,16 @@
         if (e.key === 'Escape')
             hideInfo()
     });
+    function exerciseTechnique(name) {
+        const panel = document.createElement('details');
+        panel.className = 'exercise-log exercise-technique';
+        const summary = document.createElement('summary');
+        summary.textContent = 'Übungsausführung';
+        const tip = document.createElement('p');
+        tip.textContent = library[normalize(name)][4];
+        panel.append(summary, tip);
+        return panel;
+    }
     const priorTrainingDays = {
         'upper-midweek': {'Schrägbank-Brustpresse': 'A2'},
         C: {
@@ -373,8 +383,12 @@
             const card = document.createElement('div');
             card.className = 'exercise-card';
             card.append(row);
-            if (!name.startsWith('Cardio'))
-                card.append(TrainingTools.exerciseLog(plan, name, detail, priorTrainingDays[plan]?.[name]));
+            if (!name.startsWith('Cardio')) {
+                card.append(
+                    TrainingTools.exerciseLog(plan, name, detail, priorTrainingDays[plan]?.[name]),
+                    exerciseTechnique(name)
+                );
+            }
             root.append(card);
             if (name.startsWith('Cardio'))
                 root.append(FitnessSteps.panel(render))
