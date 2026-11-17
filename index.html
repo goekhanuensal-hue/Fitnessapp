@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
     <meta name="referrer" content="no-referrer">
-    <meta name="description" content="Dein Upper/Lower-Trainingsplan, Organizer und Trainingsfortschritt.">
+    <meta name="description" content="Dein Trainingsplan mit drei Oberkörpertagen und einem Beintag, Organizer und Trainingsfortschritt.">
     <meta name="theme-color" content="#FFFFFF">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -29,7 +29,7 @@
     <main>
         <section class="hero" aria-labelledby="trainingTitle">
             <h1 id="trainingTitle">Mein Training</h1>
-            <p>Upper / Lower Split · 4 Trainingstage pro Woche</p>
+            <p>3 × Oberkörper · 1 × Unterkörper pro Woche</p>
         </section>
         <div class="workspace">
             <section id="organizer" class="organizer" hidden aria-labelledby="organizerTitle">
@@ -66,9 +66,9 @@
             <div id="trainingView">
                 <div class="tabs" role="tablist">
                     <button class="tab active" data-plan="A">Upper A</button>
-                    <button class="tab" data-plan="B">Lower A</button>
-                    <button class="tab" data-plan="A2">Upper B</button>
-                    <button class="tab" data-plan="C">Lower B</button>
+                    <button class="tab" data-plan="upper-midweek">Upper B</button>
+                    <button class="tab" data-plan="A2">Upper C</button>
+                    <button class="tab" data-plan="C">Lower</button>
                 </div>
                 <div id="description" class="sub"></div>
                 <div class="summary">
@@ -81,7 +81,7 @@
                 <div id="items"></div>
                 <button class="action" id="reset">Training abschließen & Haken zurücksetzen</button>
                 <div class="hint">
-                    Wochenrhythmus: Mo · Upper A, Mi · Lower A, Fr · Upper B, Sa · Lower B. Vor jeder Einheit 5–8 Minuten aufwärmen. Bei großen Maschinenübungen 2–3 Minuten, bei Isolationsübungen 60–120 Sekunden pausieren. Trainiere bei den meisten Arbeitssätzen mit 1–2 Wiederholungen in Reserve; ausgewählte letzte Isolationssätze können bis zum technischen Muskelversagen gehen. Dein tägliches Schrittziel bleibt 10.000 Schritte; ab 8.000 Schritten wird Cardio automatisch abgehakt.
+                    Mo · Upper A, Mi · Upper B, Fr · Upper C, Sa · Lower. Vor der ersten schweren Übung 1–3 Aufwärmsätze. Pausen: 2–3 Minuten bei Mehrgelenksübungen, 60–120 Sekunden bei Isolation. RIR bedeutet saubere Wiederholungen in Reserve. Meist 1–2 RIR. Gelegentlich darf der letzte Isolationssatz bis 0 RIR gehen. Wenn du die obere Wiederholungsgrenze in allen Sätzen bei der vorgesehenen RIR erreichst, erhöhe das Gewicht beim nächsten Training um die kleinste Stufe. Schrittziel: 10.000 täglich, Cardio-Haken ab 8.000.
                     <br>
                     <br>
                     Deine Haken und Trainingswerte werden auf diesem Gerät in diesem Browser gespeichert.
@@ -131,66 +131,73 @@
     <script src="./steps.js"></script>
     <script src="./training-tools.js"></script>
     <script>
+    const dailyCardio = ['Cardio · tägliche Schritte', 'Tägliches Ziel: 10.000 Schritte · ab 8.000 automatisch erledigt'];
     const plans = {
         A: {
-            desc: 'Upper A · Oberkörper · ca. 75–90 Minuten',
+            label: 'Upper A',
+            desc: 'Montag · Brust und Rücken · 19 Arbeitssätze',
             items: [
-                ['Brustdrücken an der Multipresse (flache Bank)', '3 × 6–10'],
-                ['Rudern mit Bruststütze', '3 × 8–12'],
-                ['Latzug zur Brust', '3 × 8–12'],
-                ['Schrägbank-Brustpresse', '2 × 8–12'],
-                ['Seitheben Maschine', '3 × 12–20'],
-                ['Reverse Butterfly', '2 × 12–20'],
-                ['Bizepscurls Maschine', '3 × 10–15'],
-                ['Trizepsdrücken am Kabel', '3 × 10–15'],
-                ['Cardio · tägliche Schritte', 'Tägliches Ziel: 10.000 Schritte · ab 8.000 automatisch erledigt']
+                ['Brustdrücken an der Multipresse (flache Bank)', '3 × 6–10 · 1–2 RIR'],
+                ['Rudern mit Bruststütze', '3 × 8–12 · 1–2 RIR'],
+                ['Latzug zur Brust', '2 × 8–12 · 1–2 RIR'],
+                ['Schrägbank-Brustpresse', '2 × 8–12 · 1–2 RIR'],
+                ['Seitheben Maschine', '3 × 12–20 · 1 RIR'],
+                ['Reverse Butterfly', '2 × 12–20 · 1 RIR'],
+                ['Bizepscurls Maschine', '2 × 10–15 · 1 RIR'],
+                ['Trizepsdrücken am Kabel', '2 × 10–15 · 1 RIR'],
+                dailyCardio
             ]
         },
-        B: {
-            desc: 'Lower A · Unterkörper · ca. 75–90 Minuten',
+        'upper-midweek': {
+            label: 'Upper B',
+            desc: 'Mittwoch · Obere Brust, Lat und Schultern · 18 Arbeitssätze',
             items: [
-                ['Hackenschmidt-Kniebeuge', '3 × 6–10'],
-                ['Hip Thrust Maschine', '3 × 8–12'],
-                ['Sitzender Beinbeuger', '3 × 8–12'],
-                ['Beinstrecker', '2 × 10–15'],
-                ['Wadenheben Maschine', '3 × 10–15'],
-                ['Bauchcrunch Maschine', '3 × 12–15'],
-                ['Cardio · tägliche Schritte', 'Tägliches Ziel: 10.000 Schritte · ab 8.000 automatisch erledigt']
+                ['Schrägbank-Brustpresse', '3 × 8–12 · 1–2 RIR'],
+                ['Neutraler Latzug', '3 × 8–12 · 1–2 RIR'],
+                ['Sitzendes Kabelrudern', '2 × 10–15 · 1–2 RIR'],
+                ['Schulterdrücken Maschine', '2 × 8–12 · 2 RIR'],
+                ['Seitheben am Kabel', '2 × 12–20 · 1 RIR'],
+                ['Reverse Butterfly', '2 × 12–20 · 1 RIR'],
+                ['Bizepscurls Maschine', '2 × 10–15 · 1 RIR'],
+                ['Trizepsdrücken am Kabel', '2 × 10–15 · 1 RIR'],
+                dailyCardio
             ]
         },
         A2: {
-            desc: 'Upper B · Oberkörper · ca. 75–90 Minuten',
+            label: 'Upper C',
+            desc: 'Freitag · Rücken, Schultern und Arme · 19 Arbeitssätze',
             items: [
-                ['Schrägbank-Brustpresse', '3 × 8–12'],
-                ['Neutraler Latzug', '3 × 8–12'],
-                ['Sitzendes Kabelrudern', '3 × 8–12'],
-                ['Butterfly Maschine', '2 × 12–15'],
-                ['Seitheben am Kabel', '3 × 12–20'],
-                ['Reverse Butterfly', '2 × 12–20'],
-                ['Hammercurls am Kabel', '3 × 10–15'],
-                ['Trizepsdrücken über Kopf', '3 × 10–15'],
-                ['Cardio · tägliche Schritte', 'Tägliches Ziel: 10.000 Schritte · ab 8.000 automatisch erledigt']
+                ['Sitzendes Kabelrudern', '3 × 8–12 · 1–2 RIR'],
+                ['Butterfly Maschine', '3 × 10–15 · 1 RIR'],
+                ['Neutraler Latzug', '2 × 10–15 · 1–2 RIR'],
+                ['Seitheben am Kabel', '3 × 12–20 · 1 RIR'],
+                ['Reverse Butterfly', '2 × 12–20 · 1 RIR'],
+                ['Hammercurls am Kabel', '3 × 10–15 · 1 RIR'],
+                ['Trizepsdrücken über Kopf', '3 × 10–15 · 1 RIR'],
+                dailyCardio
             ]
         },
         C: {
-            desc: 'Lower B · Unterkörper · ca. 75–90 Minuten',
+            label: 'Lower',
+            desc: 'Samstag · Beine, Gesäß und Bauch · 21 Arbeitssätze',
             items: [
-                ['Beinpresse', '3 × 8–12'],
-                ['Kabel Pull-Through', '2 × 10–15'],
-                ['Liegender Beinbeuger', '3 × 10–15'],
-                ['Beinstrecker', '2 × 12–15'],
-                ['Abduktorenmaschine', '2 × 12–20'],
-                ['Wadenheben Maschine', '3 × 12–20'],
-                ['Bauchcrunch am Kabel', '3 × 12–15'],
-                ['Cardio · tägliche Schritte', 'Tägliches Ziel: 10.000 Schritte · ab 8.000 automatisch erledigt']
+                ['Hackenschmidt-Kniebeuge', '3 × 6–10 · 1–2 RIR'],
+                ['Sitzender Beinbeuger', '4 × 8–12 · 1 RIR'],
+                ['Beinpresse', '3 × 8–12 · 1–2 RIR'],
+                ['Hip Thrust Maschine', '3 × 8–12 · 1–2 RIR'],
+                ['Beinstrecker', '2 × 10–15 · 1 RIR'],
+                ['Wadenheben Maschine', '3 × 12–20 · 1 RIR'],
+                ['Bauchcrunch am Kabel', '3 × 12–15 · 1 RIR'],
+                dailyCardio
             ]
         }
     };
-    const defaultPlanByDay = ({1:'A',3:'B',5:'A2',6:'C'})[new Date().getDay()] || 'A';
-    let plan = localStorage.getItem('fitness-selected-plan-upperlower-v2') || defaultPlanByDay;
-    if (!plans[plan])
-        plan = 'A';
-    const key = p => 'fitness-checks-upperlower-v2-' + p; // Neue Checklisten getrennt halten; alte Trainingshaken bleiben erhalten.
+    const planByDay = {1: 'A', 3: 'upper-midweek', 5: 'A2', 6: 'C'};
+    const defaultPlan = planByDay[new Date().getDay()] || 'A';
+    const selectedPlanKey = 'fitness-selected-plan-upperfocus-v3';
+    const savedPlan = localStorage.getItem(selectedPlanKey);
+    let plan = Object.hasOwn(plans, savedPlan) ? savedPlan : defaultPlan;
+    const key = p => 'fitness-checks-upperfocus-v3-' + p;
     function getChecks() {
         let state = {};
         try {
@@ -217,6 +224,7 @@
         'Rudern mit Bruststütze': [['upperback', 'lats'], ['biceps', 'reardelts'], 'Oberer Rücken, Latissimus', 'Bizeps, hintere Schulter', 'Brust an der Stütze lassen und Ellbogen nach hinten ziehen.'],
         'Rudern am Kabel': [['upperback', 'lats'], ['biceps', 'reardelts'], 'Oberer Rücken, Latissimus', 'Bizeps, hintere Schulter', 'Rumpf stabil halten und Griff zum Oberbauch ziehen.'],
         'Schrägbank-Brustpresse': [['upperchest'], ['triceps', 'frontdelts'], 'Oberer Brustbereich', 'Trizeps, vordere Schulter', 'Schrägbank moderat einstellen, Schultern stabilisieren.'],
+        'Schulterdrücken Maschine': [['frontdelts', 'sidedelts'], ['triceps'], 'Vordere und seitliche Schulter', 'Trizeps', 'Sitzhöhe so einstellen, dass die Griffe auf Schulterhöhe starten. Rücken an der Lehne lassen und kontrolliert drücken.'],
         'Schulterdrücken': [['frontdelts', 'sidedelts'], ['triceps'], 'Vordere und seitliche Schulter', 'Trizeps', 'Gewicht kontrolliert über Kopf drücken.'],
         'Reverse Butterfly': [['reardelts', 'upperback'], ['traps'], 'Hintere Schulter, oberer Rücken', 'Trapezmuskel', 'Arme seitlich nach hinten führen, ohne Schwung.'],
         'Wadenheben': [['calves'], [], 'Wadenmuskulatur', '—', 'Fersen kontrolliert senken und anheben.'],
@@ -302,6 +310,15 @@
         if (e.key === 'Escape')
             hideInfo()
     });
+    const priorTrainingDays = {
+        'upper-midweek': {'Schrägbank-Brustpresse': 'A2'},
+        C: {
+            'Hackenschmidt-Kniebeuge': 'B',
+            'Sitzender Beinbeuger': 'B',
+            'Hip Thrust Maschine': 'B',
+            'Beinstrecker': 'B'
+        }
+    };
     function render() {
         document.querySelectorAll('.tab').forEach(b => {
             b.classList.toggle('active', b.dataset.plan === plan);
@@ -357,7 +374,7 @@
             card.className = 'exercise-card';
             card.append(row);
             if (!name.startsWith('Cardio'))
-                card.append(TrainingTools.exerciseLog(plan, name, detail));
+                card.append(TrainingTools.exerciseLog(plan, name, detail, priorTrainingDays[plan]?.[name]));
             root.append(card);
             if (name.startsWith('Cardio'))
                 root.append(FitnessSteps.panel(render))
@@ -365,11 +382,11 @@
     }
     document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => {
         plan = b.dataset.plan;
-        localStorage.setItem('fitness-selected-plan-upperlower-v2', plan);
+        localStorage.setItem(selectedPlanKey, plan);
         render()
     }));
     document.querySelector('#reset').addEventListener('click', () => {
-        if (confirm('Training abschließen und alle Haken für Plan ' + plan + ' zurücksetzen?')) {
+        if (confirm('Training abschließen und alle Haken für ' + plans[plan].label + ' zurücksetzen?')) {
             localStorage.removeItem(key(plan));
             FitnessSteps.setManualCardio(plan, false);
             render();
@@ -387,18 +404,9 @@
     } catch {}
     let calendarMonth = new Date();
     calendarMonth = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth(), 1);
-    const sportDays = [1, 3, 5, 6];
+    const sportDays = Object.keys(planByDay).map(Number);
     function scheduledPlan(date) {
-        const day = date.getDay();
-        if (day === 1)
-            return 'Upper A';
-        if (day === 3)
-            return 'Lower A';
-        if (day === 5)
-            return 'Upper B';
-        if (day === 6)
-            return 'Lower B';
-        return 'Pause';
+        return plans[planByDay[date.getDay()]]?.label ?? 'Pause';
     }
     function isoWeek(date) {
         const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));

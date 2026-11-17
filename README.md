@@ -1,6 +1,6 @@
 # Mein Training
 
-Statische Trainings-Web-App mit den vier Upper/Lower-Einheiten, Organizer,
+Statische Trainings-Web-App mit drei Oberkörpereinheiten, einem Beintag, Organizer,
 Pausentimer, Schritten und lokal gespeicherten Trainingswerten.
 
 ## GitHub Pages

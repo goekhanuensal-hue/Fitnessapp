@@ -2,7 +2,7 @@
   "id": "./",
   "name": "Mein Training",
   "short_name": "Training",
-  "description": "Upper/Lower-Trainingsplan, Organizer und Trainingsfortschritt",
+  "description": "Trainingsplan mit Oberkörper-Schwerpunkt, Organizer und Trainingsfortschritt",
   "lang": "de",
   "start_url": "./",
   "scope": "./",

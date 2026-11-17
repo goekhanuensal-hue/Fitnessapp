@@ -3,13 +3,15 @@
 
   const formatNumber = new Intl.NumberFormat('de-DE');
 
-  function exerciseLog(plan, name, prescription) {
-    const key = 'fitness-exercise-last-v1-' + plan + ':' + name;
+  function exerciseLog(plan, name, prescription, priorPlan) {
+    const storageKey = planId => 'fitness-exercise-last-v1-' + planId + ':' + name;
+    const key = storageKey(plan);
     const timed = name === 'Plank';
     const unit = timed ? 'Sekunden' : 'Wdh.';
     let saved;
     try {
-      saved = JSON.parse(localStorage.getItem(key));
+      saved = JSON.parse(localStorage.getItem(key) ??
+        (priorPlan ? localStorage.getItem(storageKey(priorPlan)) : null));
     } catch {
       saved = null;
     }
